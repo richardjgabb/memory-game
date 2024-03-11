@@ -1,3 +1,71 @@
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000030;
+}
+
+.modal.open {
+    display: block;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    font-family: "Love Ya Like A Sister", cursive, sans-serif;
+    background-color: #6fbbdb;
+    border-radius: 1rem;
+}
+
+.close {
+    color: #ffffff;
+    font-size: 40pt;
+}
+
+.close:hover,
+.close:focus {
+    color: #000000FF;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.instructionText {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.instructionText {
+    margin: 0;
+    padding: 0.2rem;
+}
+
+.instructionText h2 {
+    margin: 0.75rem;
+}
+
+.introClose h1 {
+    font-size: 40pt;
+    margin-bottom: 0.5rem;
+}
+
+.introClose {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+
 body{
     background-color: #88AD63;
     font-family: "Love Ya Like A Sister", cursive;
@@ -11,15 +79,12 @@ body{
 
 .gameTitle{
     font-size: 4.5rem;
-
 }
 
 .levelNum{
     margin-top: 3rem;
     margin-bottom: 2rem;
     font-size: 2.5rem;
-
-
 }
 
 .gameBoxes {
