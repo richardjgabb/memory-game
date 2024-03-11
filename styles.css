@@ -45,13 +45,17 @@
     padding: 1rem;
 }
 
-.instructionText h1, h2 {
+.instructionText {
     margin: 0;
-    padding: 0.5rem;
+    padding: 0.2rem;
 }
 
-.instructionText h1 {
-    font-size: 34pt;
+.instructionText h2 {
+    margin: 0.75rem;
+}
+
+.introClose h1 {
+    font-size: 40pt;
     margin-bottom: 0.5rem;
 }
 

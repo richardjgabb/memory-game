@@ -6,8 +6,8 @@ closeBtn.addEventListener('click', () => {
 });
 
 
-function open() {
+function openInstructionsModal() {
     modal.classList.add('open');
 }
 
-open()
+openInstructionsModal()
