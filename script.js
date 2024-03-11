@@ -1,5 +1,5 @@
-var modal = document.querySelector('#instructionModal');
-var closeBtn = document.querySelector('.close');
+const modal = document.querySelector('#instructionModal');
+const closeBtn = document.querySelector('.close');
 const instructionsButton = document.querySelector('#instructionsButton')
 
 closeBtn.addEventListener('click', () => {
@@ -7,8 +7,9 @@ closeBtn.addEventListener('click', () => {
 });
 
 
-function openInstructionsModal() {
+const openInstructionsModal = () => {
     modal.classList.add('open');
 }
 
 instructionsButton.addEventListener('click', openInstructionsModal);
+
