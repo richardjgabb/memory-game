@@ -40,7 +40,7 @@ body{
     width: 12rem;
     height: 12rem;
     margin: 1rem;
-    background-color: antiquewhite;
+    background-color: #FAEBD7;
     border: none;
     border-radius: 10px;
     box-shadow: 5px 5px 3px #445632;
@@ -62,5 +62,5 @@ button{
 }
 
 button:hover {
-    background-color: antiquewhite;
+    background-color: #FAEBD7;
 }
