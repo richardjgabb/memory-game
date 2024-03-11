@@ -13,3 +13,50 @@ const openInstructionsModal = () => {
 
 instructionsButton.addEventListener('click', openInstructionsModal);
 
+// max's get pattern functions:
+
+// const
+
+function getRandBoxes(boxCount) {
+    let newArray = [];
+    for (let i = 0; i < boxCount; i++) {
+        newArray.push(Math.floor(Math.random() * 9))
+    }
+    return newArray;
+}
+let indexList = [1,2,3,4];
+
+const box1 = document.querySelector('.box1');
+const box2 = document.querySelector('.box2');
+const box3 = document.querySelector('.box3');
+const box4 = document.querySelector('.box4');
+const box5 = document.querySelector('.box5');
+const box6 = document.querySelector('.box6');
+const box7 = document.querySelector('.box7');
+const box8 = document.querySelector('.box8');
+const box9 = document.querySelector('.box9');
+let boxArray = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
+
+const lightDiv = (div) => {
+    // const dogImage = document.createElement('img');
+    // div.appendChild(dogImage);
+    div.style.backgroundImage = "url('dogim7redone!.png')";
+    setTimeout(() => {
+        div.style.backgroundImage = 'none';
+        div.style.backgroundColor = '';
+    }, 500);
+}
+
+const displayPattern = (array) => {
+    for (let i= 0; i<4; i++) {
+        let currentBox = boxArray[getRandBoxes(4)[i]];
+        // (i) => {
+        //
+        // }
+        setTimeout(() => {
+            lightDiv(currentBox);
+        }, 1000*(i+1));
+    }
+}
+
+displayPattern(indexList);

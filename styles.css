@@ -109,6 +109,7 @@ body{
     border: none;
     border-radius: 10px;
     box-shadow: 5px 5px 3px #445632;
+    background-size: contain;
 }
 
 .buttons{
