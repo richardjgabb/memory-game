@@ -1,4 +1,3 @@
-
 const instructionModal = document.querySelector('#instructionModal');
 const instructionCloseBtn = document.querySelector('.instructionClose');
 const instructionsButton = document.querySelector('#instructionsButton')
@@ -9,7 +8,6 @@ const boxes = document.querySelectorAll('.box');
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
-
 
 const openModal = (modal) => {
     modal.classList.add('open');
@@ -33,12 +31,12 @@ const  getRandBoxes = (patternLength) => {
     }
 }
 
-
 const lightDiv = (div, background) => {
     div.classList.add(background);
+    const speedMultDisappear = 0.6;
     setTimeout(() => {
         div.classList.remove(background);
-    }, speed*0.6);
+    }, speed * speedMultDisappear);
 }
 
 const displayPattern = (pattern, speed) => {
@@ -46,25 +44,26 @@ const displayPattern = (pattern, speed) => {
         let currentBox = boxes[pattern[i]];
         setTimeout(() => {
             lightDiv(currentBox, 'dogImg');
-        }, speed*(i+1));
+        }, speed * (i+1));
     }
 }
 
 const startGame = () => {
     getRandBoxes(patternLength);
+    const speedMult = 0.5;
     if (roundCounter % 5 === 0 && roundCounter !== 0) {
-        speed *= 0.5
+        speed *= speedMult;
     }
-        displayPattern(pattern, speed);
+    displayPattern(pattern, speed);
     startButton.removeEventListener('click', startGame)
 }
 
 const nextRound = () => {
     patternCounter = 0;
     pattern = [];
-    roundCounter ++;
+    roundCounter++;
     if (roundCounter % 3 === 0){
-        patternLength ++;
+        patternLength++;
     }
     startGame();
 }
@@ -84,16 +83,12 @@ gameOverCloseBtn.addEventListener('click', () => {
     closeModal(gameOverModal);
 })
 
-// max's get pattern functions:
-
-// const
-
 startButton.addEventListener('click', startGame)
 
 boxes.forEach(box => {
     box.addEventListener('click', () => {
         if (box.id === 'box' + pattern[patternCounter]) {
-            patternCounter ++;
+            patternCounter++;
             lightDiv(box, "pawImg");
         } else {
             gameOver();
