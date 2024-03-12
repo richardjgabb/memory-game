@@ -6,6 +6,9 @@ const startButton = document.querySelector('.start')
 const gameOverModal = document.querySelector('#gameOverModal');
 const gameOverCloseBtn = document.querySelector('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
+let roundCounter = 0;
+let patternLength = 4;
+let speed = 1000;
 
 
 const openModal = (modal) => {
@@ -19,10 +22,13 @@ const closeModal = (modal) => {
 const gameOver = () => {
     openModal(gameOverModal);
     pattern = [];
+    roundCounter = 0;
+    speed = 1000;
+    patternLength = 4;
 }
 
-const  getRandBoxes = (boxCount) => {
-    for (let i = 0; i < boxCount; i++) {
+const  getRandBoxes = (patternLength) => {
+    for (let i = 0; i < patternLength; i++) {
         pattern.push(Math.floor(Math.random() * 9))
     }
 }
@@ -32,28 +38,35 @@ const lightDiv = (div, background) => {
     div.classList.add(background);
     setTimeout(() => {
         div.classList.remove(background);
-    }, 666);
+    }, speed*0.6);
 }
 
-const displayPattern = (pattern) => {
+const displayPattern = (pattern, speed) => {
     for (let i = 0; i < pattern.length; i++) {
         let currentBox = boxes[pattern[i]];
         setTimeout(() => {
             lightDiv(currentBox, 'dogImg');
-        }, 1000*(i+1));
+        }, speed*(i+1));
     }
 }
 
 const startGame = () => {
-    getRandBoxes(4);
-    displayPattern(pattern);
+    getRandBoxes(patternLength);
+    if (roundCounter % 5 === 0 && roundCounter !== 0) {
+        speed *= 0.5
+    }
+        displayPattern(pattern, speed);
     startButton.removeEventListener('click', startGame)
 }
 
 const nextRound = () => {
     patternCounter = 0;
     pattern = [];
-    startGame()
+    roundCounter ++;
+    if (roundCounter % 3 === 0){
+        patternLength ++;
+    }
+    startGame();
 }
 
 let pattern = [];
@@ -91,3 +104,4 @@ boxes.forEach(box => {
         }
     })
 })
+
