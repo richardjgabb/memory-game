@@ -38,8 +38,6 @@ const box9 = document.querySelector('.box9');
 let boxArray = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
 
 const lightDiv = (div) => {
-    // const dogImage = document.createElement('img');
-    // div.appendChild(dogImage);
     div.style.backgroundImage = "url('dogim7redone!.png')";
     setTimeout(() => {
         div.style.backgroundImage = 'none';
@@ -50,9 +48,6 @@ const lightDiv = (div) => {
 const displayPattern = (pattern) => {
     for (let i= 0; i<pattern.length; i++) {
         let currentBox = boxArray[pattern[i]];
-        // (i) => {
-        //
-        // }
         setTimeout(() => {
             lightDiv(currentBox);
         }, 1000*(i+1));
@@ -62,4 +57,3 @@ const displayPattern = (pattern) => {
 getRandBoxes(4);
 displayPattern(pattern);
 
-//game over
