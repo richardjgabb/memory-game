@@ -60,6 +60,12 @@ const startGame = () => {
     startButton.removeEventListener('click', startGame)
 }
 
+const nextRound = () => {
+    patternCounter = 0;
+    pattern = [];
+    startGame()
+}
+
 startButton.addEventListener('click', startGame)
 
 let patternCounter = 0;
@@ -76,9 +82,7 @@ for (let box of boxes) {
             startButton.addEventListener('click', startGame)
         }
         if (patternCounter === pattern.length) {
-            patternCounter = 0;
-            pattern = [];
-            startGame()
+            setTimeout(nextRound, 500)
         }
     })
 }
