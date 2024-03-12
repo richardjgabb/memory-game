@@ -1,16 +1,18 @@
 
 const instructionModal = document.querySelector('#instructionModal');
 const instructionCloseBtn = document.querySelector('.instructionClose');
-const instructionsButton = document.querySelector('#instructionsButton')
-const startButton = document.querySelector('.start')
+const instructionsButton = document.querySelector('#instructionsButton');
+const startButton = document.querySelector('.start');
 const gameOverModal = document.querySelector('#gameOverModal');
 const gameOverCloseBtn = document.querySelector('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
-const levelNumber = document.querySelector('.levelNum')
-const playAgainButton = document.querySelector('.replayButton')
+const levelNumber = document.querySelector('.levelNum');
+const playAgainButton = document.querySelector('.replayButton');
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
+let pattern = [];
+let patternCounter = 0;
 
 const openModal = (modal) => {
     modal.classList.add('open');
@@ -29,9 +31,9 @@ const gameOver = () => {
     levelNumber.textContent = 'Level 1';
 }
 
-const  getRandBoxes = (boxCount) => {
-    for (let i = 0; i < boxCount; i++) {
-        pattern.push(Math.floor(Math.random() * 9))
+const  getRandBoxes = (patternLength) => {
+    for (let i = 0; i < patternLength; i++) {
+        pattern.push(Math.floor(Math.random() * 9));
     }
 }
 
@@ -39,22 +41,25 @@ const lightDiv = (div, background) => {
     div.classList.add(background);
     setTimeout(() => {
         div.classList.remove(background);
-    }, 666);
+    }, speed*0.6);
 }
 
-const displayPattern = (pattern) => {
+const displayPattern = (pattern, speed) => {
     for (let i = 0; i < pattern.length; i++) {
         let currentBox = boxes[pattern[i]];
         setTimeout(() => {
             lightDiv(currentBox, 'dogImg');
-        }, 1000*(i+1));
+        }, speed*(i+1));
     }
 }
 
 const startGame = () => {
-    getRandBoxes(4);
-    displayPattern(pattern);
-    startButton.removeEventListener('click', startGame)
+    getRandBoxes(patternLength);
+    if (roundCounter % 5 === 0 && roundCounter !== 0) {
+        speed *= 0.9
+    }
+    displayPattern(pattern, speed);
+    startButton.removeEventListener('click', startGame);
 }
 
 const nextRound = () => {
@@ -68,11 +73,8 @@ const nextRound = () => {
     startGame();
 }
 
-let pattern = [];
-let patternCounter = 0;
-
 instructionsButton.addEventListener('click', () => {
-    openModal(instructionModal)
+    openModal(instructionModal);
 })
 
 instructionCloseBtn.addEventListener('click', () => {
@@ -85,10 +87,10 @@ gameOverCloseBtn.addEventListener('click', () => {
 
 playAgainButton.addEventListener('click', () => {
     closeModal(gameOverModal);
-    startGame()
+    startGame();
 })
 
-startButton.addEventListener('click', startGame)
+startButton.addEventListener('click', startGame);
 
 boxes.forEach(box => {
     box.addEventListener('click', () => {
@@ -97,10 +99,10 @@ boxes.forEach(box => {
             lightDiv(box, "pawImg");
         } else {
             gameOver();
-            startButton.addEventListener('click', startGame)
+            startButton.addEventListener('click', startGame);
         }
         if (patternCounter === pattern.length && patternCounter !== 0) {
-            setTimeout(nextRound, 500)
+            setTimeout(nextRound, 500);
         }
     })
 })
