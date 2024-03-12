@@ -36,8 +36,8 @@ const box8 = document.querySelector('.box8');
 const box9 = document.querySelector('.box9');
 let boxArray = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
 
-const lightDiv = (div) => {
-    div.style.backgroundImage = "url('dogim7redone!.png')";
+const lightDiv = (div, url) => {
+    div.style.backgroundImage = url;
     setTimeout(() => {
         div.style.backgroundImage = 'none';
         div.style.backgroundColor = '';
@@ -48,7 +48,7 @@ const displayPattern = (pattern) => {
     for (let i= 0; i<pattern.length; i++) {
         let currentBox = boxArray[pattern[i]];
         setTimeout(() => {
-            lightDiv(currentBox);
+            lightDiv(currentBox, "url('dogim7redone!.png')");
         }, 1000*(i+1));
     }
 }
@@ -64,6 +64,7 @@ for (let box of boxes) {
         if (box.id === 'box' + pattern[patternCounter]) {
             console.log('correct')
             patternCounter ++;
+            lightDiv(box, "url('blackPawPrintTransparentBackground.png')")
         } else {
             console.log('Game over');
         }
