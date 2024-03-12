@@ -55,15 +55,31 @@
     margin: 0.75rem;
 }
 
-.introClose h1 {
+.instructionTop h1 {
     font-size: 40pt;
     margin-bottom: 0.5rem;
 }
 
-.introClose {
+.instructionTop {
     display: flex;
     justify-content: space-between;
     padding: 0;
+}
+
+.gameOverTop {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.gameOverBtns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.leftX {
+    width: 30px;
 }
 
 body{

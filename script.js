@@ -1,19 +1,35 @@
-const modal = document.querySelector('#instructionModal');
-const closeBtn = document.querySelector('.close');
+const instructionModal = document.querySelector('#instructionModal');
+const instructionCloseBtn = document.querySelector('.instructionClose');
 const instructionsButton = document.querySelector('#instructionsButton')
 const startButton = document.querySelector('.start')
+const gameOverModal = document.querySelector('#gameOverModal');
+const gameOverCloseBtn = document.querySelector('.gameOverClose');
 
-closeBtn.addEventListener('click', () => {
-    modal.classList.remove('open');
-});
 
-const openInstructionsModal = () => {
+
+const openModal = (modal) => {
     modal.classList.add('open');
 }
 
-instructionsButton.addEventListener('click', openInstructionsModal);
+const closeModal = (modal) => {
+    modal.classList.remove('open');
+}
 
+instructionsButton.addEventListener('click', () => {
+    openModal(instructionModal)
+})
 
+instructionCloseBtn.addEventListener('click', () => {
+    closeModal(instructionModal);
+})
+
+gameOverCloseBtn.addEventListener('click', () => {
+    closeModal(gameOverModal);
+})
+
+const gameOver = () => {
+    openModal(gameOverModal)
+}
 // max's get pattern functions:
 
 // const
@@ -37,6 +53,7 @@ const box8 = document.querySelector('.box8');
 const box9 = document.querySelector('.box9');
 let boxArray = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
 
+
 const lightDiv = (div, url) => {
     div.style.backgroundImage = url;
     setTimeout(() => {
@@ -49,7 +66,8 @@ const displayPattern = (pattern) => {
     for (let i= 0; i<pattern.length; i++) {
         let currentBox = boxArray[pattern[i]];
         setTimeout(() => {
-            lightDiv(currentBox, "url('dogim7redone!.png')");
+            lightDiv(currentBox);
+            lightDiv(currentBox, "url('dogimg7.png')");
         }, 1000*(i+1));
     }
 }
@@ -78,7 +96,7 @@ for (let box of boxes) {
             patternCounter ++;
             lightDiv(box, "url('blackPawPrintTransparentBackground.png')")
         } else {
-            console.log('Game over');
+            gameOver();
             startButton.addEventListener('click', startGame)
         }
         if (patternCounter === pattern.length) {
@@ -86,5 +104,3 @@ for (let box of boxes) {
         }
     })
 }
-
-
