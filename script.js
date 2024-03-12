@@ -6,12 +6,12 @@ closeBtn.addEventListener('click', () => {
     modal.classList.remove('open');
 });
 
-
 const openInstructionsModal = () => {
     modal.classList.add('open');
 }
 
 instructionsButton.addEventListener('click', openInstructionsModal);
+
 
 // max's get pattern functions:
 
@@ -23,7 +23,6 @@ function getRandBoxes(boxCount) {
         newArray.push(Math.floor(Math.random() * 9))
     }
     pattern = newArray;
-    return newArray;
 }
 
 const box1 = document.querySelector('.box1');
@@ -56,4 +55,19 @@ const displayPattern = (pattern) => {
 
 getRandBoxes(4);
 displayPattern(pattern);
+
+let patternCounter = 0;
+
+let boxes = document.querySelectorAll('.box')
+for (let box of boxes) {
+    box.addEventListener('click', () => {
+        if (box.id == pattern[patternCounter]) {
+            console.log('correct')
+            patternCounter ++;
+        } else {
+            console.log('Game over');
+        }
+    })
+}
+
 
