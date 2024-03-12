@@ -11,18 +11,30 @@
     <script type="text/javascript" src="script.js" defer></script>
 </head>
 <body>
-  <div id="instructionModal" class="modal">
+<div id="instructionModal" class="modal">
     <div class="modal-content">
-        <div class="introClose">
-            <div></div>
+        <div class="instructionTop">
+            <div class="leftX"></div>
             <h1>Instructions!</h1>
-            <span class="close">X</span>
+            <span class="instructionClose close">X</span>
         </div>
         <div class="instructionText">
                 <h2>Keep an eye on your canine companion!</h2>
                 <h2>Remember the sequence in which he appears and press the buttons in the correct order!</h2>
                 <h2>Every level will be harder than the last!</h2>
                 <h2>Make a mistake and it's game over!</h2>
+        </div>
+    </div>
+</div>
+<div id="gameOverModal" class="modal">
+    <div class="modal-content">
+        <div class="gameOverTop">
+            <div class="leftX"></div>
+            <h1>Game Over :(</h1>
+            <span class="gameOverClose close">X</span>
+        </div>
+        <div class="gameOverBtns">
+            <button class="replayButton">Play Again</button>
         </div>
     </div>
 </div>
@@ -64,6 +76,7 @@
 
         </div>
     </div>
+
 </div>
     <div class="buttons">
         <button  class="leaderBoard">Leaderboard</button>
