@@ -14,12 +14,11 @@ instructionsButton.addEventListener('click', openInstructionsModal);
 
 //
 let patternCounter = 0;
-let pattern = [3, 8, 1, 2]
 
 let boxes = document.querySelectorAll('.box')
 for (let box of boxes) {
     box.addEventListener('click', () => {
-        if (box.id === pattern[patternCounter].toString()) {
+        if (box.id === 'box' + pattern[patternCounter]) {
             console.log('correct')
             patternCounter ++;
         } else {
