@@ -6,7 +6,11 @@ const startButton = document.querySelector('.start')
 const gameOverModal = document.querySelector('#gameOverModal');
 const gameOverCloseBtn = document.querySelector('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
-
+const levelNumber = document.querySelector('.levelNum')
+const playAgainButton = document.querySelector('.replayButton')
+let roundCounter = 0;
+let patternLength = 4;
+let speed = 1000;
 
 const openModal = (modal) => {
     modal.classList.add('open');
@@ -19,6 +23,10 @@ const closeModal = (modal) => {
 const gameOver = () => {
     openModal(gameOverModal);
     pattern = [];
+    roundCounter = 0;
+    speed = 1000;
+    patternLength = 4;
+    levelNumber.textContent = 'Level 1';
 }
 
 const  getRandBoxes = (boxCount) => {
@@ -26,7 +34,6 @@ const  getRandBoxes = (boxCount) => {
         pattern.push(Math.floor(Math.random() * 9))
     }
 }
-
 
 const lightDiv = (div, background) => {
     div.classList.add(background);
@@ -53,7 +60,12 @@ const startGame = () => {
 const nextRound = () => {
     patternCounter = 0;
     pattern = [];
-    startGame()
+    roundCounter ++;
+    levelNumber.textContent = 'Level ' + (roundCounter+1);
+    if (roundCounter % 3 === 0){
+        patternLength ++;
+    }
+    startGame();
 }
 
 let pattern = [];
@@ -71,9 +83,10 @@ gameOverCloseBtn.addEventListener('click', () => {
     closeModal(gameOverModal);
 })
 
-// max's get pattern functions:
-
-// const
+playAgainButton.addEventListener('click', () => {
+    closeModal(gameOverModal);
+    startGame()
+})
 
 startButton.addEventListener('click', startGame)
 
@@ -86,7 +99,7 @@ boxes.forEach(box => {
             gameOver();
             startButton.addEventListener('click', startGame)
         }
-        if (patternCounter === pattern.length) {
+        if (patternCounter === pattern.length && patternCounter !== 0) {
             setTimeout(nextRound, 500)
         }
     })
