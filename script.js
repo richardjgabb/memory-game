@@ -16,15 +16,15 @@ instructionsButton.addEventListener('click', openInstructionsModal);
 // max's get pattern functions:
 
 // const
-
+let pattern = []
 function getRandBoxes(boxCount) {
     let newArray = [];
     for (let i = 0; i < boxCount; i++) {
         newArray.push(Math.floor(Math.random() * 9))
     }
+    pattern = newArray;
     return newArray;
 }
-let indexList = [1,2,3,4];
 
 const box1 = document.querySelector('.box1');
 const box2 = document.querySelector('.box2');
@@ -47,9 +47,9 @@ const lightDiv = (div) => {
     }, 500);
 }
 
-const displayPattern = (array) => {
-    for (let i= 0; i<4; i++) {
-        let currentBox = boxArray[getRandBoxes(4)[i]];
+const displayPattern = (pattern) => {
+    for (let i= 0; i<pattern.length; i++) {
+        let currentBox = boxArray[pattern[i]];
         // (i) => {
         //
         // }
@@ -59,4 +59,7 @@ const displayPattern = (array) => {
     }
 }
 
-displayPattern(indexList);
+getRandBoxes(4);
+displayPattern(pattern);
+
+//game over
