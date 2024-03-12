@@ -1,6 +1,7 @@
 const modal = document.querySelector('#instructionModal');
 const closeBtn = document.querySelector('.close');
 const instructionsButton = document.querySelector('#instructionsButton')
+const startButton = document.querySelector('.start')
 
 closeBtn.addEventListener('click', () => {
     modal.classList.remove('open');
@@ -53,8 +54,13 @@ const displayPattern = (pattern) => {
     }
 }
 
-getRandBoxes(4);
-displayPattern(pattern);
+const startGame = () => {
+    getRandBoxes(4);
+    displayPattern(pattern);
+    startButton.removeEventListener('click', startGame)
+}
+
+startButton.addEventListener('click', startGame)
 
 let patternCounter = 0;
 
@@ -67,11 +73,12 @@ for (let box of boxes) {
             lightDiv(box, "url('blackPawPrintTransparentBackground.png')")
         } else {
             console.log('Game over');
+            startButton.addEventListener('click', startGame)
         }
         if (patternCounter === pattern.length) {
             patternCounter = 0;
             pattern = [];
-            console.log('restart')
+            startGame()
         }
     })
 }
