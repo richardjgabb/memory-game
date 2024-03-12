@@ -7,7 +7,6 @@ const gameOverModal = document.querySelector('#gameOverModal');
 const gameOverCloseBtn = document.querySelector('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
 const levelNumber = document.querySelector('.levelNum');
-const playAgainButton = document.querySelector('.replayButton');
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -83,11 +82,6 @@ instructionCloseBtn.addEventListener('click', () => {
 
 gameOverCloseBtn.addEventListener('click', () => {
     closeModal(gameOverModal);
-})
-
-playAgainButton.addEventListener('click', () => {
-    closeModal(gameOverModal);
-    startGame();
 })
 
 startButton.addEventListener('click', startGame);
