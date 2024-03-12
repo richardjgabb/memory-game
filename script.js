@@ -1,10 +1,11 @@
+
 const instructionModal = document.querySelector('#instructionModal');
 const instructionCloseBtn = document.querySelector('.instructionClose');
 const instructionsButton = document.querySelector('#instructionsButton')
 const startButton = document.querySelector('.start')
 const gameOverModal = document.querySelector('#gameOverModal');
 const gameOverCloseBtn = document.querySelector('.gameOverClose');
-
+const boxes = document.querySelectorAll('.box');
 
 
 const openModal = (modal) => {
@@ -15,59 +16,30 @@ const closeModal = (modal) => {
     modal.classList.remove('open');
 }
 
-instructionsButton.addEventListener('click', () => {
-    openModal(instructionModal)
-})
-
-instructionCloseBtn.addEventListener('click', () => {
-    closeModal(instructionModal);
-})
-
-gameOverCloseBtn.addEventListener('click', () => {
-    closeModal(gameOverModal);
-})
-
 const gameOver = () => {
-    openModal(gameOverModal)
+    openModal(gameOverModal);
+    pattern = [];
 }
-// max's get pattern functions:
 
-// const
-let pattern = []
-function getRandBoxes(boxCount) {
-    let newArray = [];
+const  getRandBoxes = (boxCount) => {
     for (let i = 0; i < boxCount; i++) {
-        newArray.push(Math.floor(Math.random() * 9))
+        pattern.push(Math.floor(Math.random() * 9))
     }
-    pattern = newArray;
 }
 
-const box1 = document.querySelector('.box1');
-const box2 = document.querySelector('.box2');
-const box3 = document.querySelector('.box3');
-const box4 = document.querySelector('.box4');
-const box5 = document.querySelector('.box5');
-const box6 = document.querySelector('.box6');
-const box7 = document.querySelector('.box7');
-const box8 = document.querySelector('.box8');
-const box9 = document.querySelector('.box9');
-let boxArray = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
 
-
-const lightDiv = (div, url) => {
-    div.style.backgroundImage = url;
+const lightDiv = (div, background) => {
+    div.classList.add(background);
     setTimeout(() => {
-        div.style.backgroundImage = 'none';
-        div.style.backgroundColor = '';
-    }, 500);
+        div.classList.remove(background);
+    }, 666);
 }
 
 const displayPattern = (pattern) => {
-    for (let i= 0; i<pattern.length; i++) {
-        let currentBox = boxArray[pattern[i]];
+    for (let i = 0; i < pattern.length; i++) {
+        let currentBox = boxes[pattern[i]];
         setTimeout(() => {
-            lightDiv(currentBox);
-            lightDiv(currentBox, "url('dogimg7.png')");
+            lightDiv(currentBox, 'dogImg');
         }, 1000*(i+1));
     }
 }
@@ -84,17 +56,32 @@ const nextRound = () => {
     startGame()
 }
 
-startButton.addEventListener('click', startGame)
-
+let pattern = [];
 let patternCounter = 0;
 
-let boxes = document.querySelectorAll('.box')
-for (let box of boxes) {
+instructionsButton.addEventListener('click', () => {
+    openModal(instructionModal)
+})
+
+instructionCloseBtn.addEventListener('click', () => {
+    closeModal(instructionModal);
+})
+
+gameOverCloseBtn.addEventListener('click', () => {
+    closeModal(gameOverModal);
+})
+
+// max's get pattern functions:
+
+// const
+
+startButton.addEventListener('click', startGame)
+
+boxes.forEach(box => {
     box.addEventListener('click', () => {
         if (box.id === 'box' + pattern[patternCounter]) {
-            console.log('correct')
             patternCounter ++;
-            lightDiv(box, "url('blackPawPrintTransparentBackground.png')")
+            lightDiv(box, "pawImg");
         } else {
             gameOver();
             startButton.addEventListener('click', startGame)
@@ -103,4 +90,4 @@ for (let box of boxes) {
             setTimeout(nextRound, 500)
         }
     })
-}
+})

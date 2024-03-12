@@ -1,4 +1,3 @@
-
 .modal {
     display: none;
     position: fixed;
@@ -38,6 +37,14 @@
     cursor: pointer;
 }
 
+.dogImg {
+    background-image: url('dogimg7.png');
+}
+
+.pawImg {
+    background-image: url('blackPawPrintTransparentBackground.png');
+}
+
 .instructionText {
     text-align: center;
     display: flex;
@@ -51,25 +58,26 @@
     padding: 0.2rem;
 }
 
-.instructionText h2 {
+.instructionText p {
     margin: 0.75rem;
+    font-size: 1.4rem;
 }
 
-.instructionTop h1 {
-    font-size: 40pt;
+.modalTop h2 {
+    font-size: 2rem;
     margin-bottom: 0.5rem;
 }
 
-.instructionTop {
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
+.modalTop {
+    text-align: center;
+    padding: 0 50px;
+    position: relative;
 }
 
-.gameOverTop {
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
+.close {
+    position: absolute;
+    right: 10px;
+    top: 5px;
 }
 
 .gameOverBtns {
@@ -78,9 +86,6 @@
     align-items: center;
 }
 
-.leftX {
-    width: 30px;
-}
 
 body{
     background-color: #88AD63;
@@ -146,3 +151,4 @@ button{
 button:hover {
     background-color: #FAEBD7;
 }
+
