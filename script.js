@@ -1,13 +1,16 @@
 const instructionModal = document.querySelector('#instructionModal');
 const instructionCloseBtn = document.querySelector('.instructionClose');
-const instructionsButton = document.querySelector('#instructionsButton')
-const startButton = document.querySelector('.start')
+const instructionsButton = document.querySelector('#instructionsButton');
+const startButton = document.querySelector('.start');
 const gameOverModal = document.querySelector('#gameOverModal');
 const gameOverCloseBtn = document.querySelector('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
+const levelNumber = document.querySelector('.levelNum');
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
+let pattern = [];
+let patternCounter = 0;
 
 const openModal = (modal) => {
     modal.classList.add('open');
@@ -23,11 +26,12 @@ const gameOver = () => {
     roundCounter = 0;
     speed = 1000;
     patternLength = 4;
+    levelNumber.textContent = 'Level 1';
 }
 
 const  getRandBoxes = (patternLength) => {
     for (let i = 0; i < patternLength; i++) {
-        pattern.push(Math.floor(Math.random() * 9))
+        pattern.push(Math.floor(Math.random() * 9));
     }
 }
 
@@ -62,17 +66,15 @@ const nextRound = () => {
     patternCounter = 0;
     pattern = [];
     roundCounter++;
+    levelNumber.textContent = 'Level ' + (roundCounter+1);
     if (roundCounter % 3 === 0){
         patternLength++;
     }
     startGame();
 }
 
-let pattern = [];
-let patternCounter = 0;
-
 instructionsButton.addEventListener('click', () => {
-    openModal(instructionModal)
+    openModal(instructionModal);
 })
 
 instructionCloseBtn.addEventListener('click', () => {
@@ -83,7 +85,7 @@ gameOverCloseBtn.addEventListener('click', () => {
     closeModal(gameOverModal);
 })
 
-startButton.addEventListener('click', startGame)
+startButton.addEventListener('click', startGame);
 
 boxes.forEach(box => {
     box.addEventListener('click', () => {
@@ -92,10 +94,10 @@ boxes.forEach(box => {
             lightDiv(box, "pawImg");
         } else {
             gameOver();
-            startButton.addEventListener('click', startGame)
+            startButton.addEventListener('click', startGame);
         }
-        if (patternCounter === pattern.length) {
-            setTimeout(nextRound, 500)
+        if (patternCounter === pattern.length && patternCounter !== 0) {
+            setTimeout(nextRound, 500);
         }
     })
 })
