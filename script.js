@@ -4,6 +4,7 @@ const instructionsButton = document.querySelector('#instructionsButton')
 const gameOverModal = document.querySelector('#gameOverModal');
 const gameOverCloseBtn = document.querySelector('.gameOverClose');
 
+
 const openModal = (modal) => {
     modal.classList.add('open');
 }
@@ -14,7 +15,7 @@ const closeModal = (modal) => {
 
 instructionsButton.addEventListener('click', () => {
     openModal(instructionModal)
-});
+})
 
 instructionCloseBtn.addEventListener('click', () => {
     closeModal(instructionModal);
@@ -50,8 +51,9 @@ const box8 = document.querySelector('.box8');
 const box9 = document.querySelector('.box9');
 let boxArray = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
 
-const lightDiv = (div) => {
-    div.style.backgroundImage = "url('dogimg7.png')";
+
+const lightDiv = (div, url) => {
+    div.style.backgroundImage = url;
     setTimeout(() => {
         div.style.backgroundImage = 'none';
         div.style.backgroundColor = '';
@@ -63,6 +65,7 @@ const displayPattern = (pattern) => {
         let currentBox = boxArray[pattern[i]];
         setTimeout(() => {
             lightDiv(currentBox);
+            lightDiv(currentBox, "url('dogimg7.png')");
         }, 1000*(i+1));
     }
 }
@@ -75,11 +78,17 @@ let patternCounter = 0;
 let boxes = document.querySelectorAll('.box')
 for (let box of boxes) {
     box.addEventListener('click', () => {
-        if (box.id == pattern[patternCounter]) {
+        if (box.id === 'box' + pattern[patternCounter]) {
             console.log('correct')
             patternCounter ++;
+            lightDiv(box, "url('blackPawPrintTransparentBackground.png')")
         } else {
             gameOver();
+        }
+        if (patternCounter === pattern.length) {
+            patternCounter = 0;
+            pattern = [];
+            console.log('restart')
         }
     })
 }
