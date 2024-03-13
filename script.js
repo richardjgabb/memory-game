@@ -7,9 +7,9 @@ const gameOverCloseBtns = document.querySelectorAll('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
 const levelNumber = document.querySelector('.levelNum');
 const playAgainButtons = document.querySelectorAll('.replayButton');
-const leaderboardModal = document.querySelector('#leaderboardModal')
-const leaderboardButton = document.querySelector('.leaderboardButton')
-const playerName = document.querySelector('#name')
+const leaderboardModal = document.querySelector('#leaderboardModal');
+const leaderboardButtons = document.querySelectorAll('.leaderboardButton');
+const playerName = document.querySelector('#name');
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -26,6 +26,10 @@ const closeModal = (modal) => {
 
 const gameOver = () => {
     openModal(gameOverModal);
+    boxes.forEach(box => {
+        //replacing with a 'clean' version of the node once the user has got the pattern wrong
+        box.replaceWith(box.cloneNode(true));
+    })
     pattern = [];
     roundCounter = 0;
     speed = 1000;
@@ -57,6 +61,7 @@ const displayPattern = (pattern, speed) => {
 }
 
 const startGame = () => {
+    activateBoxes();
     getRandBoxes(patternLength);
     const speedMult = 0.5;
     if (roundCounter % 5 === 0 && roundCounter !== 0) {
@@ -76,6 +81,7 @@ const nextRound = () => {
     }
     startGame();
 }
+
 
 instructionsButton.addEventListener('click', () => {
     openModal(instructionModal);
@@ -99,6 +105,14 @@ playAgainButtons.forEach(button => {
         startGame();
     })
 })
+
+leaderboardButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        openModal(leaderboardModal);
+        closeModal(gameOverModal);
+    })
+})
+
 // awaiting button from S7T1 & S7T5!!!!
 
 // leaderboardButton.addEventListener('click', () => {
@@ -108,21 +122,36 @@ playAgainButtons.forEach(button => {
 
 startButton.addEventListener('click', startGame);
 
-boxes.forEach(box => {
-    box.addEventListener('click', () => {
-        if (box.id === 'box' + pattern[patternCounter]) {
-            patternCounter++;
-            lightDiv(box, "pawImg");
-        } else {
-            gameOver();
-            startButton.addEventListener('click', startGame);
-        }
-        if (patternCounter === pattern.length && patternCounter !== 0) {
-            setTimeout(nextRound, 500);
-        }
-    })
-})
 
+const activateBoxes = () => {
+    boxes.forEach(box => {
+        box.addEventListener('click', () => {
+            if (box.id === 'box' + pattern[patternCounter]) {
+                patternCounter++;
+                lightDiv(box, "pawImg");
+            } else {
+                gameOver();
+                startButton.addEventListener('click', startGame);
+            }
+            if (patternCounter === pattern.length && patternCounter !== 0) {
+                setTimeout(nextRound, 500);
+            }
+        })
+    })
+}
+
+const activator = (box) => {
+    if (box.id === 'box' + pattern[patternCounter]) {
+        patternCounter++;
+        lightDiv(box, "pawImg");
+    } else {
+        gameOver();
+        startButton.addEventListener('click', startGame);
+    }
+    if (patternCounter === pattern.length && patternCounter !== 0) {
+        setTimeout(nextRound, 500);
+    }
+}
 const sendData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/score',
         {method: 'POST',
@@ -135,3 +164,4 @@ const sendData = () => {
     }).then(data => {
         console.table(data);
     })}
+
