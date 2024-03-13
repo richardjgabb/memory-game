@@ -7,8 +7,8 @@ const gameOverCloseBtn = document.querySelector('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
 const levelNumber = document.querySelector('.levelNum');
 const playAgainButton = document.querySelector('.replayButton');
-const playerName = document.querySelector('#name')
-const submitName = document.querySelector('.submitName')
+const playerName = document.querySelector('#name');
+const submitName = document.querySelector('.submitName');
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -25,7 +25,7 @@ const closeModal = (modal) => {
 
 const gameOver = () => {
     openModal(gameOverModal);
-    getData()
+    getData();
 }
 
 const resetPattern = () => {
