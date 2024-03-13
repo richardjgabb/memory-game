@@ -7,6 +7,7 @@ const gameOverCloseBtn = document.querySelector('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
 const levelNumber = document.querySelector('.levelNum');
 const playAgainButton = document.querySelector('.replayButton');
+const playerName = document.querySelector('#name')
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -108,3 +109,15 @@ boxes.forEach(box => {
     })
 })
 
+const sendData = () => {
+    fetch('https://leaderboard.dev.io-academy.uk/score',
+        {method: 'POST',
+            body: JSON.stringify({"game": 'Memory Dog', "name" : playerName.value, "score" : (roundCounter + 1)}),
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(response => {
+        return response.json();
+    }).then(data => {
+        console.table(data);
+    })}
