@@ -165,4 +165,3 @@ const sendData = () => {
         console.table(data);
     })}
 
-//testing push on story7-task5
