@@ -8,6 +8,7 @@ const boxes = document.querySelectorAll('.box');
 const levelNumber = document.querySelector('.levelNum');
 const playAgainButton = document.querySelector('.replayButton');
 const playerName = document.querySelector('#name')
+const submitName = document.querySelector('.submitName')
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -24,6 +25,10 @@ const closeModal = (modal) => {
 
 const gameOver = () => {
     openModal(gameOverModal);
+    getData()
+}
+
+const resetPattern = () => {
     pattern = [];
     roundCounter = 0;
     speed = 1000;
@@ -112,7 +117,7 @@ boxes.forEach(box => {
 const sendData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/score',
         {method: 'POST',
-            body: JSON.stringify({"game": 'Memory Dog', "name" : playerName.value, "score" : (roundCounter + 1)}),
+            body: JSON.stringify({"game": 'MemoryDog', "name" : playerName.value, "score" : roundCounter}),
             headers: {
                 'content-type': 'application/json'
             }
@@ -120,4 +125,23 @@ const sendData = () => {
         return response.json();
     }).then(data => {
         console.table(data);
-    })}
+    })
+    pattern = [];
+    roundCounter = 0;
+    speed = 1000;
+    patternLength = 4;
+    levelNumber.textContent = 'Level 1';
+}
+
+submitName.addEventListener('click', sendData);
+
+const getData = () => {
+    fetch('https://leaderboard.dev.io-academy.uk/scores?game=MemoryDog').then(response => {
+        return response.json();
+    }).then(result => {
+        result.data.sort(function(a,b){return b.score-a.score});
+        for (let i=0; i<10; i++) {
+            console.log((i+1) + ': ' + result.data[i].name + ': ' + result.data[i].score);
+        }
+    })
+}
