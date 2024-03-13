@@ -103,7 +103,7 @@ boxes.forEach(box => {
     box.addEventListener('click', () => {
         if (box.id === 'box' + pattern[patternCounter]) {
             patternCounter++;
-            lightDiv(box, "pawImg");
+            lightDiv(box, 'pawImg');
         } else {
             gameOver();
             startButton.addEventListener('click', startGame);
@@ -117,7 +117,7 @@ boxes.forEach(box => {
 const sendData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/score',
         {method: 'POST',
-            body: JSON.stringify({"game": 'MemoryDog', "name" : playerName.value, "score" : roundCounter}),
+            body: JSON.stringify({'game': 'MemoryDog', 'name' : playerName.value, 'score' : roundCounter}),
             headers: {
                 'content-type': 'application/json'
             }
