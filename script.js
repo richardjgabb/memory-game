@@ -126,11 +126,7 @@ const sendData = () => {
     }).then(data => {
         console.table(data);
     })
-    pattern = [];
-    roundCounter = 0;
-    speed = 1000;
-    patternLength = 4;
-    levelNumber.textContent = 'Level 1';
+    resetPattern();
 }
 
 submitName.addEventListener('click', sendData);
