@@ -3,10 +3,12 @@ const instructionCloseBtn = document.querySelector('.instructionClose');
 const instructionsButton = document.querySelector('#instructionsButton');
 const startButton = document.querySelector('.start');
 const gameOverModal = document.querySelector('#gameOverModal');
-const gameOverCloseBtn = document.querySelector('.gameOverClose');
+const gameOverCloseBtns = document.querySelectorAll('.gameOverClose');
 const boxes = document.querySelectorAll('.box');
 const levelNumber = document.querySelector('.levelNum');
-const playAgainButton = document.querySelector('.replayButton');
+const playAgainButtons = document.querySelectorAll('.replayButton');
+const leaderboardModal = document.querySelector('#leaderboardModal')
+const leaderboardButton = document.querySelector('.leaderboardButton')
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -82,14 +84,26 @@ instructionCloseBtn.addEventListener('click', () => {
     closeModal(instructionModal);
 })
 
-gameOverCloseBtn.addEventListener('click', () => {
-    closeModal(gameOverModal);
+gameOverCloseBtns.forEach(button => {
+    button.addEventListener('click', () => {
+        closeModal(instructionModal);
+        closeModal(gameOverModal);
+        closeModal(leaderboardModal);
+    })
 })
+playAgainButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        closeModal(gameOverModal);
+        closeModal(leaderboardModal);
+        startGame();
+    })
+})
+// awaiting button from S7T1 & S7T5!!!!
 
-playAgainButton.addEventListener('click', () => {
-    closeModal(gameOverModal);
-    startGame();
-})
+// leaderboardButton.addEventListener('click', () => {
+//     openModal(leaderboardModal);
+//     closeModal(gameOverModal);
+// })
 
 startButton.addEventListener('click', startGame);
 
@@ -107,4 +121,5 @@ boxes.forEach(box => {
         }
     })
 })
+
 
