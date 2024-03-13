@@ -11,12 +11,13 @@ const submitName = document.querySelector('.submitName');
 const playAgainButtons = document.querySelectorAll('.replayButton');
 const leaderboardModal = document.querySelector('#leaderboardModal')
 const leaderboardButton = document.querySelector('.leaderboardButton')
-const playerName = document.querySelector('#name')
+const leaderboardTable = document.querySelector('.leaderboardTable')
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
 let pattern = [];
 let patternCounter = 0;
+let leaders = [];
 
 const openModal = (modal) => {
     modal.classList.add('open');
@@ -150,10 +151,22 @@ const getData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/scores?game=MemoryDog').then(response => {
         return response.json();
     }).then(result => {
-        result.data.sort(function(a,b){return b.score-a.score});
-        for (let i=0; i<10; i++) {
-            console.log((i+1) + ': ' + result.data[i].name + ': ' + result.data[i].score);
+        for (let i=0;i<10;i++){
+            leaders.push(result.data.sort(function(a,b){return b.score-a.score})[i]);
+            addLeaderboardTable(leaders[i]);
         }
-    })
+    }
+    )}
+
+openModal(leaderboardModal)
+
+const addLeaderboardTable = (player) => {
+    let tableRow = document.createElement('tr');
+    let tableData = document.createElement('td');
+    let tableDataTwo = document.createElement('td');
+    leaderboardTable.appendChild(tableRow);
+    tableRow.appendChild(tableData).textContent = player.name;
+    tableRow.appendChild(tableDataTwo).textContent = player.score;
 }
-    })}
+
+getData()
