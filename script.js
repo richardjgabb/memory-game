@@ -1,3 +1,4 @@
+//page elements
 const instructionModal = document.querySelector('#instructionModal');
 const instructionCloseBtn = document.querySelector('.instructionClose');
 const instructionsButton = document.querySelector('#instructionsButton');
@@ -13,6 +14,8 @@ const leaderboardModal = document.querySelector('#leaderboardModal');
 const leaderboardButtons = document.querySelectorAll('.leaderboardButton');
 const leaderboardButton = document.querySelector('.leaderboardButton');
 const leaderboardTable = document.querySelector('.leaderboardTable tbody');
+
+//globals
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -20,6 +23,7 @@ let pattern = [];
 let patternCounter = 0;
 let boxesActive = false;
 
+//function definitions
 const openModal = (modal) => {
     modal.classList.add('open');
 }
@@ -87,6 +91,57 @@ const nextRound = () => {
     startGame();
 }
 
+const getData = () => {
+    fetch('https://leaderboard.dev.io-academy.uk/scores?game=MemoryDog').then(response => {
+        return response.json();
+    }).then(result => {
+            let leaders = [];
+            for (let i=0;i<10;i++){
+                leaders.push(result.data.sort(function(a,b){return b.score-a.score})[i]);
+                addLeaderboardTable(leaders[i], i+1);
+            }
+        }
+    )}
+
+const addLeaderboardTable = (player, i) => {
+    let tableRow = document.createElement('tr');
+    let tableData = document.createElement('td');
+    let tableDataTwo = document.createElement('td');
+    let tableDataThree = document.createElement('td');
+    leaderboardTable.appendChild(tableRow);
+    if (i > 0 && i < 4) {
+        let image = document.createElement('img');
+        tableRow.appendChild(tableDataThree);
+        tableDataThree.appendChild(image);
+        if (i === 1) {
+            image.src = 'firstPlaceRibbon.png';
+        } else if (i === 2) {
+            image.src = 'secondPlaceRibbon.png';
+        } else if (i === 3) {
+            image.src = 'thirdPlaceRibbon.png';
+        }
+    } else {
+        tableRow.appendChild(tableDataThree).textContent = i;
+    }
+    tableRow.appendChild(tableData).textContent = player.name;
+    tableRow.appendChild(tableDataTwo).textContent = player.score;
+}
+
+const sendData = () => {
+    fetch('https://leaderboard.dev.io-academy.uk/score',
+        {
+            method: 'POST',
+            body: JSON.stringify({'game': 'MemoryDog', 'name': playerName.value, 'score': roundCounter}),
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(response => {
+        return response.json();
+    }).then(data => {
+        console.table(data);
+    })
+    resetPattern();
+}
 
 instructionsButton.addEventListener('click', () => {
     openModal(instructionModal);
@@ -120,42 +175,6 @@ leaderboardButtons.forEach(button => {
     })
 })
 
-const getData = () => {
-    fetch('https://leaderboard.dev.io-academy.uk/scores?game=MemoryDog').then(response => {
-        return response.json();
-    }).then(result => {
-        let leaders = [];
-            for (let i=0;i<10;i++){
-                leaders.push(result.data.sort(function(a,b){return b.score-a.score})[i]);
-                addLeaderboardTable(leaders[i], i+1);
-            }
-        }
-    )}
-
-const addLeaderboardTable = (player, i) => {
-    let tableRow = document.createElement('tr');
-    let tableData = document.createElement('td');
-    let tableDataTwo = document.createElement('td');
-    let tableDataThree = document.createElement('td');
-    leaderboardTable.appendChild(tableRow);
-    if (i > 0 && i < 4) {
-        let image = document.createElement('img');
-        tableRow.appendChild(tableDataThree);
-        tableDataThree.appendChild(image);
-        if (i === 1) {
-            image.src = 'firstPlaceRibbon.png';
-        } else if (i === 2) {
-            image.src = 'secondPlaceRibbon.png';
-        } else if (i === 3) {
-            image.src = 'thirdPlaceRibbon.png';
-        }
-    } else {
-        tableRow.appendChild(tableDataThree).textContent = i;
-    }
-    tableRow.appendChild(tableData).textContent = player.name;
-    tableRow.appendChild(tableDataTwo).textContent = player.score;
-}
-
 leaderboardButton.addEventListener('click', () => {
     leaderboardTable.innerHTML = '';
      openModal(leaderboardModal);
@@ -184,23 +203,6 @@ boxes.forEach(box => {
         }
     })
     })
-
-
-const sendData = () => {
-    fetch('https://leaderboard.dev.io-academy.uk/score',
-        {
-            method: 'POST',
-            body: JSON.stringify({'game': 'MemoryDog', 'name': playerName.value, 'score': roundCounter}),
-            headers: {
-                'content-type': 'application/json'
-            }
-        }).then(response => {
-        return response.json();
-    }).then(data => {
-        console.table(data);
-    })
-    resetPattern();
-}
 
 submitName.addEventListener('click', sendData);
 
