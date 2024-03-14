@@ -14,8 +14,8 @@ const leaderboardModal = document.querySelector('#leaderboardModal');
 const leaderboardButtons = document.querySelectorAll('.leaderboardButton');
 const leaderboardButton = document.querySelector('.leaderboardButton');
 const leaderboardTable = document.querySelector('.leaderboardTable tbody');
+const themeMusic = document.querySelector('.music');
 
-//globals
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -35,6 +35,8 @@ const closeModal = (modal) => {
 const gameOver = () => {
     boxesActive = false;
     openModal(gameOverModal);
+    startButton.disabled = false;
+    leaderboardTable.innerHTML = '';
     getData();
 }
 
@@ -74,13 +76,14 @@ const displayPattern = (pattern, speed) => {
 
 const startGame = () => {
     boxesActive = false
+    themeMusic.play();
     getRandBoxes(patternLength);
+    themeMusic.play();
     const speedMult = 0.5;
     if (roundCounter % 5 === 0 && roundCounter !== 0) {
         speed *= speedMult;
     }
     displayPattern(pattern, speed);
-    startButton.removeEventListener('click', startGame)
 }
 
 const nextRound = () => {
@@ -144,6 +147,7 @@ const sendData = () => {
         console.table(data);
     })
     resetPattern();
+    openModal(leaderboardModal);
 }
 
 instructionsButton.addEventListener('click', () => {
@@ -166,6 +170,7 @@ playAgainButtons.forEach(button => {
     button.addEventListener('click', () => {
         closeModal(gameOverModal);
         closeModal(leaderboardModal);
+        startButton.disabled = true;
         resetPattern();
         startGame();
     })
@@ -186,6 +191,7 @@ leaderboardButton.addEventListener('click', () => {
 })
 
 startButton.addEventListener('click', () => {
+    startButton.disabled = true;
     resetPattern();
     startGame();
 });
