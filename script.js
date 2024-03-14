@@ -9,9 +9,9 @@ const levelNumber = document.querySelector('.levelNum');
 const playerName = document.querySelector('#name');
 const submitName = document.querySelector('.submitName');
 const playAgainButtons = document.querySelectorAll('.replayButton');
-const leaderboardModal = document.querySelector('#leaderboardModal')
-const leaderboardButton = document.querySelector('.leaderboardButton')
-const leaderboardTable = document.querySelector('.leaderboardTable tbody')
+const leaderboardModal = document.querySelector('#leaderboardModal');
+const leaderboardButton = document.querySelector('.leaderboardButton');
+const leaderboardTable = document.querySelector('.leaderboardTable tbody');
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -125,15 +125,15 @@ const addLeaderboardTable = (player, i) => {
     let tableDataThree = document.createElement('td');
     leaderboardTable.appendChild(tableRow);
     if (i > 0 && i < 4) {
-        let image = document.createElement('img')
-        tableRow.appendChild(tableDataThree)
-        tableDataThree.appendChild(image)
+        let image = document.createElement('img');
+        tableRow.appendChild(tableDataThree);
+        tableDataThree.appendChild(image);
         if (i === 1) {
-            image.src = 'firstPlaceRibbon.png'
+            image.src = 'firstPlaceRibbon.png';
         } else if (i === 2) {
-            image.src = 'secondPlaceRibbon.png'
+            image.src = 'secondPlaceRibbon.png';
         } else if (i === 3) {
-            image.src = 'thirdPlaceRibbon.png'
+            image.src = 'thirdPlaceRibbon.png';
         }
     } else {
         tableRow.appendChild(tableDataThree).textContent = i;
