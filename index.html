@@ -11,6 +11,9 @@
     <script type="text/javascript" src="script.js" defer></script>
 </head>
 <body>
+<audio class="music" loop autoplay>
+    <source src="Beat%20One.mp3">
+</audio>
 <div id="instructionModal" class="modal">
     <div class="modal-content">
         <div class="modalTop">
@@ -31,6 +34,36 @@
             <h2>Game Over :(</h2>
             <span class="gameOverClose close">X</span>
         </div>
+        <div class="leaderboardSubmit">
+            <label for="name">Enter your name for the leaderboard!</label>
+                <input type="text" id="name" name="name">
+                <input type="submit" class = "submitName" value="Submit">
+        </div>
+        <div class="gameOverBtns">
+            <button class="replayButton">Play Again</button>
+            <button class="leaderboardButton">Leaderboard</button>
+        </div>
+    </div>
+</div>
+<div id="leaderboardModal" class="modal">
+    <div class="modal-content">
+        <div class="modalTop">
+            <h2>Leaderboard</h2>
+            <span class="gameOverClose close">X</span>
+        </div>
+            <div class="leaderboard">
+                <table class="leaderboardTable">
+                    <thead>
+                        <tr>
+                            <th>Position:</th>
+                            <th>Name:</th>
+                            <th>Level:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         <div class="gameOverBtns">
             <button class="replayButton">Play Again</button>
         </div>
@@ -77,6 +110,7 @@
 
 </div>
 <div class="buttons">
+    <button class="leaderboardButton">Leaderboard</button>
     <button class="start">Start</button>
     <button id="instructionsButton" class="instructions">Instructions</button>
 </div>
