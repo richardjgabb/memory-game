@@ -179,15 +179,10 @@ playAgainButtons.forEach(button => {
 leaderboardButtons.forEach(button => {
     button.addEventListener('click', () => {
         openModal(leaderboardModal);
+        leaderboardTable.innerHTML = '';
+        getData();
         closeModal(gameOverModal);
     })
-})
-
-leaderboardButton.addEventListener('click', () => {
-    leaderboardTable.innerHTML = '';
-     openModal(leaderboardModal);
-     getData();
-     closeModal(gameOverModal);
 })
 
 startButton.addEventListener('click', () => {
