@@ -26,10 +26,6 @@ const closeModal = (modal) => {
 
 const gameOver = () => {
     openModal(gameOverModal);
-    boxes.forEach(box => {
-        //replacing with a 'clean' version of the node once the user has got the pattern wrong
-        box.replaceWith(box.cloneNode(true));
-    })
     pattern = [];
     roundCounter = 0;
     speed = 1000;
@@ -61,7 +57,6 @@ const displayPattern = (pattern, speed) => {
 }
 
 const startGame = () => {
-    activateBoxes();
     getRandBoxes(patternLength);
     const speedMult = 0.5;
     if (roundCounter % 5 === 0 && roundCounter !== 0) {
@@ -113,23 +108,18 @@ leaderboardButtons.forEach(button => {
     })
 })
 
-// awaiting button from S7T1 & S7T5!!!!
-
-// leaderboardButton.addEventListener('click', () => {
-//     openModal(leaderboardModal);
-//     closeModal(gameOverModal);
-// })
-
 startButton.addEventListener('click', startGame);
 
 
 const activateBoxes = () => {
     boxes.forEach(box => {
         box.addEventListener('click', () => {
+            console.log('box clicked');
             if (box.id === 'box' + pattern[patternCounter]) {
                 patternCounter++;
                 lightDiv(box, "pawImg");
             } else {
+                console.log(`printing from the else where box id is ${box.id} and correct answer is ${pattern[patternCounter]} and pattern counter is ${patternCounter}`)
                 gameOver();
                 startButton.addEventListener('click', startGame);
             }
@@ -140,22 +130,13 @@ const activateBoxes = () => {
     })
 }
 
-const activator = (box) => {
-    if (box.id === 'box' + pattern[patternCounter]) {
-        patternCounter++;
-        lightDiv(box, "pawImg");
-    } else {
-        gameOver();
-        startButton.addEventListener('click', startGame);
-    }
-    if (patternCounter === pattern.length && patternCounter !== 0) {
-        setTimeout(nextRound, 500);
-    }
-}
+activateBoxes();
+
 const sendData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/score',
-        {method: 'POST',
-            body: JSON.stringify({"game": 'Memory Dog', "name" : playerName.value, "score" : (roundCounter + 1)}),
+        {
+            method: 'POST',
+            body: JSON.stringify({"game": 'Memory Dog', "name": playerName.value, "score": (roundCounter + 1)}),
             headers: {
                 'content-type': 'application/json'
             }
@@ -163,5 +144,7 @@ const sendData = () => {
         return response.json();
     }).then(data => {
         console.table(data);
-    })}
+    })
+}
+
 
