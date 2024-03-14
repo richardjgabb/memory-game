@@ -163,7 +163,10 @@ leaderboardButton.addEventListener('click', () => {
      closeModal(gameOverModal);
 })
 
-startButton.addEventListener('click', startGame);
+startButton.addEventListener('click', () => {
+    resetPattern();
+    startGame();
+});
 
 boxes.forEach(box => {
     box.addEventListener('click', () => {
