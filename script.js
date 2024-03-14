@@ -29,6 +29,7 @@ const closeModal = (modal) => {
 
 const gameOver = () => {
     openModal(gameOverModal);
+    leaderboardTable.innerHTML = '';
     getData();
 }
 
@@ -112,6 +113,8 @@ playAgainButtons.forEach(button => {
 leaderboardButtons.forEach(button => {
     button.addEventListener('click', () => {
         openModal(leaderboardModal);
+        leaderboardTable.innerHTML = '';
+        getData();
         closeModal(gameOverModal);
     })
 })
@@ -151,13 +154,6 @@ const addLeaderboardTable = (player, i) => {
     tableRow.appendChild(tableData).textContent = player.name;
     tableRow.appendChild(tableDataTwo).textContent = player.score;
 }
-
-leaderboardButton.addEventListener('click', () => {
-    leaderboardTable.innerHTML = '';
-     openModal(leaderboardModal);
-     getData();
-     closeModal(gameOverModal);
-})
 
 startButton.addEventListener('click', startGame);
 
