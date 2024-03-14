@@ -108,6 +108,7 @@ playAgainButtons.forEach(button => {
     button.addEventListener('click', () => {
         closeModal(gameOverModal);
         closeModal(leaderboardModal);
+        resetPattern();
         startGame();
     })
 })
@@ -166,14 +167,11 @@ startButton.addEventListener('click', startGame);
 
 boxes.forEach(box => {
     box.addEventListener('click', () => {
-        console.log('box clicked');
         if (boxesActive) {
-            console.log('box clicked');
             if (box.id === 'box' + pattern[patternCounter]) {
                 patternCounter++;
                 lightDiv(box, "pawImg");
             } else {
-                console.log(`printing from the else where box id is ${box.id} and correct answer is ${pattern[patternCounter]} and pattern counter is ${patternCounter}`)
                 gameOver();
                 startButton.addEventListener('click', startGame);
             }
