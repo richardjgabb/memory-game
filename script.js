@@ -13,6 +13,7 @@ const leaderboardModal = document.querySelector('#leaderboardModal');
 const leaderboardButtons = document.querySelectorAll('.leaderboardButton');
 const leaderboardButton = document.querySelector('.leaderboardButton');
 const leaderboardTable = document.querySelector('.leaderboardTable tbody');
+const themeMusic = document.querySelector('.music');
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
@@ -65,7 +66,9 @@ const displayPattern = (pattern, speed) => {
 }
 
 const startGame = () => {
+    themeMusic.play();
     getRandBoxes(patternLength);
+    themeMusic.play();
     const speedMult = 0.5;
     if (roundCounter % 5 === 0 && roundCounter !== 0) {
         speed *= speedMult;
