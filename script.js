@@ -10,6 +10,7 @@ const playerName = document.querySelector('#name');
 const submitName = document.querySelector('.submitName');
 const playAgainButtons = document.querySelectorAll('.replayButton');
 const leaderboardModal = document.querySelector('#leaderboardModal');
+const leaderboardButtons = document.querySelectorAll('.leaderboardButton');
 const leaderboardButton = document.querySelector('.leaderboardButton');
 const leaderboardTable = document.querySelector('.leaderboardTable tbody');
 let roundCounter = 0;
@@ -83,6 +84,7 @@ const nextRound = () => {
     startGame();
 }
 
+
 instructionsButton.addEventListener('click', () => {
     openModal(instructionModal);
 })
@@ -98,11 +100,19 @@ gameOverCloseBtns.forEach(button => {
         closeModal(leaderboardModal);
     })
 })
+
 playAgainButtons.forEach(button => {
     button.addEventListener('click', () => {
         closeModal(gameOverModal);
         closeModal(leaderboardModal);
         startGame();
+    })
+})
+
+leaderboardButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        openModal(leaderboardModal);
+        closeModal(gameOverModal);
     })
 })
 
@@ -142,8 +152,6 @@ const addLeaderboardTable = (player, i) => {
     tableRow.appendChild(tableDataTwo).textContent = player.score;
 }
 
-// awaiting button from S7T1 & S7T5!!!!
-
 leaderboardButton.addEventListener('click', () => {
     leaderboardTable.innerHTML = '';
      openModal(leaderboardModal);
@@ -153,25 +161,32 @@ leaderboardButton.addEventListener('click', () => {
 
 startButton.addEventListener('click', startGame);
 
-boxes.forEach(box => {
-    box.addEventListener('click', () => {
-        if (box.id === 'box' + pattern[patternCounter]) {
-            patternCounter++;
-            lightDiv(box, 'pawImg');
-        } else {
-            gameOver();
-            startButton.addEventListener('click', startGame);
-        }
-        if (patternCounter === pattern.length && patternCounter !== 0) {
-            setTimeout(nextRound, 500);
-        }
+const activateBoxes = () => {
+    boxes.forEach(box => {
+        box.addEventListener('click', () => {
+            console.log('box clicked');
+            if (box.id === 'box' + pattern[patternCounter]) {
+                patternCounter++;
+                lightDiv(box, "pawImg");
+            } else {
+                console.log(`printing from the else where box id is ${box.id} and correct answer is ${pattern[patternCounter]} and pattern counter is ${patternCounter}`)
+                gameOver();
+                startButton.addEventListener('click', startGame);
+            }
+            if (patternCounter === pattern.length && patternCounter !== 0) {
+                setTimeout(nextRound, 500);
+            }
+        })
     })
-})
+}
+
+activateBoxes();
 
 const sendData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/score',
-        {method: 'POST',
-            body: JSON.stringify({'game': 'MemoryDog', 'name' : playerName.value, 'score' : roundCounter}),
+        {
+            method: 'POST',
+            body: JSON.stringify({'game': 'MemoryDog', 'name': playerName.value, 'score': roundCounter}),
             headers: {
                 'content-type': 'application/json'
             }
