@@ -1,3 +1,4 @@
+//page elements
 const instructionModal = document.querySelector('#instructionModal');
 const instructionCloseBtn = document.querySelector('.instructionClose');
 const instructionsButton = document.querySelector('#instructionsButton');
@@ -14,12 +15,15 @@ const leaderboardButtons = document.querySelectorAll('.leaderboardButton');
 const leaderboardButton = document.querySelector('.leaderboardButton');
 const leaderboardTable = document.querySelector('.leaderboardTable tbody');
 const themeMusic = document.querySelector('.music');
+
 let roundCounter = 0;
 let patternLength = 4;
 let speed = 1000;
 let pattern = [];
 let patternCounter = 0;
+let boxesActive = false;
 
+//function definitions
 const openModal = (modal) => {
     modal.classList.add('open');
 }
@@ -29,7 +33,9 @@ const closeModal = (modal) => {
 }
 
 const gameOver = () => {
+    boxesActive = false;
     openModal(gameOverModal);
+    startButton.disabled = false;
     leaderboardTable.innerHTML = '';
     getData();
 }
@@ -63,9 +69,13 @@ const displayPattern = (pattern, speed) => {
             lightDiv(currentBox, 'dogImg');
         }, speed * (i+1));
     }
+    setTimeout(() => {
+        boxesActive = true
+    }, speed * (patternLength))
 }
 
 const startGame = () => {
+    boxesActive = false
     themeMusic.play();
     getRandBoxes(patternLength);
     themeMusic.play();
@@ -74,7 +84,6 @@ const startGame = () => {
         speed *= speedMult;
     }
     displayPattern(pattern, speed);
-    startButton.removeEventListener('click', startGame)
 }
 
 const nextRound = () => {
@@ -88,45 +97,11 @@ const nextRound = () => {
     startGame();
 }
 
-
-instructionsButton.addEventListener('click', () => {
-    openModal(instructionModal);
-})
-
-instructionCloseBtn.addEventListener('click', () => {
-    closeModal(instructionModal);
-})
-
-gameOverCloseBtns.forEach(button => {
-    button.addEventListener('click', () => {
-        closeModal(instructionModal);
-        closeModal(gameOverModal);
-        closeModal(leaderboardModal);
-    })
-})
-
-playAgainButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        closeModal(gameOverModal);
-        closeModal(leaderboardModal);
-        startGame();
-    })
-})
-
-leaderboardButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        openModal(leaderboardModal);
-        leaderboardTable.innerHTML = '';
-        getData();
-        closeModal(gameOverModal);
-    })
-})
-
 const getData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/scores?game=MemoryDog').then(response => {
         return response.json();
     }).then(result => {
-        let leaders = [];
+            let leaders = [];
             for (let i=0;i<10;i++){
                 leaders.push(result.data.sort(function(a,b){return b.score-a.score})[i]);
                 addLeaderboardTable(leaders[i], i+1);
@@ -158,29 +133,6 @@ const addLeaderboardTable = (player, i) => {
     tableRow.appendChild(tableDataTwo).textContent = player.score;
 }
 
-startButton.addEventListener('click', startGame);
-
-const activateBoxes = () => {
-    boxes.forEach(box => {
-        box.addEventListener('click', () => {
-            console.log('box clicked');
-            if (box.id === 'box' + pattern[patternCounter]) {
-                patternCounter++;
-                lightDiv(box, "pawImg");
-            } else {
-                console.log(`printing from the else where box id is ${box.id} and correct answer is ${pattern[patternCounter]} and pattern counter is ${patternCounter}`)
-                gameOver();
-                startButton.addEventListener('click', startGame);
-            }
-            if (patternCounter === pattern.length && patternCounter !== 0) {
-                setTimeout(nextRound, 500);
-            }
-        })
-    })
-}
-
-activateBoxes();
-
 const sendData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/score',
         {
@@ -197,6 +149,69 @@ const sendData = () => {
     resetPattern();
     openModal(leaderboardModal);
 }
+
+instructionsButton.addEventListener('click', () => {
+    openModal(instructionModal);
+})
+
+instructionCloseBtn.addEventListener('click', () => {
+    closeModal(instructionModal);
+})
+
+gameOverCloseBtns.forEach(button => {
+    button.addEventListener('click', () => {
+        closeModal(instructionModal);
+        closeModal(gameOverModal);
+        closeModal(leaderboardModal);
+    })
+})
+
+playAgainButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        closeModal(gameOverModal);
+        closeModal(leaderboardModal);
+        startButton.disabled = true;
+        resetPattern();
+        startGame();
+    })
+})
+
+leaderboardButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        openModal(leaderboardModal);
+        closeModal(gameOverModal);
+    })
+})
+
+leaderboardButton.addEventListener('click', () => {
+    leaderboardTable.innerHTML = '';
+     openModal(leaderboardModal);
+     getData();
+     closeModal(gameOverModal);
+})
+
+startButton.addEventListener('click', () => {
+    startButton.disabled = true;
+    resetPattern();
+    startGame();
+});
+
+boxes.forEach(box => {
+    box.addEventListener('click', () => {
+        if (boxesActive) {
+            if (box.id === 'box' + pattern[patternCounter]) {
+                patternCounter++;
+                lightDiv(box, "pawImg");
+            } else {
+                gameOver();
+                startButton.addEventListener('click', startGame);
+            }
+            if (patternCounter === pattern.length && patternCounter !== 0) {
+                setTimeout(nextRound, 500);
+            }
+        }
+    })
+    })
 
 submitName.addEventListener('click', sendData);
 
