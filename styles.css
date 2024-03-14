@@ -178,3 +178,17 @@ button:hover {
     background-color: #FAEBD7;
 }
 
+.leaderboard {
+    display: flex;
+    justify-content: center;
+}
+
+th {
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+th, td {
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+}
