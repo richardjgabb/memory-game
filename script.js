@@ -18,6 +18,7 @@ let patternLength = 4;
 let speed = 1000;
 let pattern = [];
 let patternCounter = 0;
+let boxesActive = false;
 
 const openModal = (modal) => {
     modal.classList.add('open');
@@ -28,6 +29,7 @@ const closeModal = (modal) => {
 }
 
 const gameOver = () => {
+    boxesActive = false;
     openModal(gameOverModal);
     getData();
 }
@@ -64,6 +66,7 @@ const displayPattern = (pattern, speed) => {
 }
 
 const startGame = () => {
+    boxesActive = true;
     getRandBoxes(patternLength);
     const speedMult = 0.5;
     if (roundCounter % 5 === 0 && roundCounter !== 0) {
@@ -161,9 +164,10 @@ leaderboardButton.addEventListener('click', () => {
 
 startButton.addEventListener('click', startGame);
 
-const activateBoxes = () => {
-    boxes.forEach(box => {
-        box.addEventListener('click', () => {
+boxes.forEach(box => {
+    box.addEventListener('click', () => {
+        console.log('box clicked');
+        if (boxesActive) {
             console.log('box clicked');
             if (box.id === 'box' + pattern[patternCounter]) {
                 patternCounter++;
@@ -176,11 +180,10 @@ const activateBoxes = () => {
             if (patternCounter === pattern.length && patternCounter !== 0) {
                 setTimeout(nextRound, 500);
             }
-        })
+        }
     })
-}
+    })
 
-activateBoxes();
 
 const sendData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/score',
