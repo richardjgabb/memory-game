@@ -67,10 +67,13 @@ const displayPattern = (pattern, speed) => {
             lightDiv(currentBox, 'dogImg');
         }, speed * (i+1));
     }
+    setTimeout(() => {
+        boxesActive = true
+    }, speed * (patternLength))
 }
 
 const startGame = () => {
-    boxesActive = true;
+    boxesActive = false
     getRandBoxes(patternLength);
     const speedMult = 0.5;
     if (roundCounter % 5 === 0 && roundCounter !== 0) {
