@@ -181,6 +181,7 @@ const sendData = () => {
         console.table(data);
     })
     resetPattern();
+    openModal(leaderboardModal);
 }
 
 submitName.addEventListener('click', sendData);
