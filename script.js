@@ -95,18 +95,6 @@ const nextRound = () => {
     startGame();
 }
 
-const getData = () => {
-    fetch('https://leaderboard.dev.io-academy.uk/scores?game=MemoryDog').then(response => {
-        return response.json();
-    }).then(result => {
-            let leaders = [];
-            for (let i=0;i<10;i++){
-                leaders.push(result.data.sort(function(a,b){return b.score-a.score})[i]);
-                addLeaderboardTable(leaders[i], i+1);
-            }
-        }
-    )}
-
 const addLeaderboardTable = (player, i) => {
     let tableRow = document.createElement('tr');
     let tableData = document.createElement('td');
@@ -130,6 +118,17 @@ const addLeaderboardTable = (player, i) => {
     tableRow.appendChild(tableData).textContent = player.name;
     tableRow.appendChild(tableDataTwo).textContent = player.score;
 }
+const getData = () => {
+    fetch('https://leaderboard.dev.io-academy.uk/scores?game=MemoryDog').then(response => {
+        return response.json();
+    }).then(result => {
+            let leaders = [];
+            for (let i=0;i<10;i++){
+                leaders.push(result.data.sort(function(a,b){return b.score-a.score})[i]);
+                addLeaderboardTable(leaders[i], i+1);
+            }
+        }
+    )}
 
 const sendData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/score',
