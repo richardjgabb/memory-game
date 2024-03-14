@@ -36,8 +36,6 @@ const gameOver = () => {
     boxesActive = false;
     openModal(gameOverModal);
     startButton.disabled = false;
-    leaderboardTable.innerHTML = '';
-    getData();
 }
 
 const resetPattern = () => {
@@ -144,10 +142,11 @@ const sendData = () => {
         }).then(response => {
         return response.json();
     }).then(data => {
-        console.table(data);
+        leaderboardTable.innerHTML = '';
+        getData();
+        openModal(leaderboardModal);
     })
     resetPattern();
-    openModal(leaderboardModal);
 }
 
 instructionsButton.addEventListener('click', () => {
