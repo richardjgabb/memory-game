@@ -17,7 +17,6 @@ let patternLength = 4;
 let speed = 1000;
 let pattern = [];
 let patternCounter = 0;
-let leaders = [];
 
 const openModal = (modal) => {
     modal.classList.add('open');
@@ -111,6 +110,7 @@ const getData = () => {
     fetch('https://leaderboard.dev.io-academy.uk/scores?game=MemoryDog').then(response => {
         return response.json();
     }).then(result => {
+        let leaders = [];
             for (let i=0;i<10;i++){
                 leaders.push(result.data.sort(function(a,b){return b.score-a.score})[i]);
                 addLeaderboardTable(leaders[i], i+1);
@@ -124,14 +124,17 @@ const addLeaderboardTable = (player, i) => {
     let tableDataTwo = document.createElement('td');
     let tableDataThree = document.createElement('td');
     leaderboardTable.appendChild(tableRow);
-    if (i === 1) {
+    if (i > 0 && i < 4) {
         let image = document.createElement('img')
         tableRow.appendChild(tableDataThree)
-        tableDataThree.src = ''
-    } else if (i === 2) {
-        tableRow.appendChild(tableDataThree).textContent = i;
-    } else if (i === 3) {
-        tableRow.appendChild(tableDataThree).textContent = i;
+        tableDataThree.appendChild(image)
+        if (i === 1) {
+            image.src = 'firstPlaceRibbon.png'
+        } else if (i === 2) {
+            image.src = 'secondPlaceRibbon.png'
+        } else if (i === 3) {
+            image.src = 'thirdPlaceRibbon.png'
+        }
     } else {
         tableRow.appendChild(tableDataThree).textContent = i;
     }
