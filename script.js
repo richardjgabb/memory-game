@@ -43,6 +43,7 @@ const resetPattern = () => {
     roundCounter = 0;
     speed = 1000;
     patternLength = 4;
+    patternCounter = 0;
     levelNumber.textContent = 'Level 1';
 }
 
