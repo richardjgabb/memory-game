@@ -8,7 +8,7 @@ The more you chase, the quicker he gets!
 This is a memory game built using javascript and styled with basic css.
 On clicking play a random pattern of specified length is generated and displayed. It is the users role to select the correct pattern in order to move on to the next level.  
 As the user progresses the game gets more difficult as pattern length and speed of display increase.
-When the wrong pattern is entered the user is promted to submit their name for the leaderboard. The leaderboard was implemented using the this API ```https://leaderboard.dev.io-academy.uk/```
+When the wrong pattern is entered the user is prompted to submit their name for the leaderboard. The leaderboard was implemented using this API ```https://leaderboard.dev.io-academy.uk/```
 
 # Getting Started
 
